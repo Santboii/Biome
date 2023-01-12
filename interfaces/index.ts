@@ -24,3 +24,9 @@ export interface Event {
   endTime: Date
   location: string
 }
+
+export interface User {
+  id: string
+  displayName: string
+  email: string
+}

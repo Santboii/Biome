@@ -1,19 +1,37 @@
-import { collection, getDocs } from "firebase/firestore"
-import { useEffect } from "react"
-import { db } from "../../firebase"
+import { CircularProgress } from "@mui/material";
+import { getFirestore, collection } from "firebase/firestore"
+import { useEffect, useState } from "react";
+import { useCollectionOnce } from 'react-firebase-hooks/firestore';
+
+import { app } from "../../firebase"
+import { Event } from '../../interfaces'
+import CategoryMenu from "../components/CategoryMenu";
+import EventList from "../components/EventsList";
+
+
 
 const Events: React.FC = () => {
-  useEffect(() => {
-    const getEvents = async () => {
-      console.log(db)
-      console.log('WORK!!!!')
-      const querySnapshot = await getDocs(collection(db, 'events'))
-      querySnapshot.docs.map(doc => console.log(doc.data()))
-    }
-    getEvents()
-  }, [])
+  const [events, setEvents] = useState([] as Event[])
+  const [value, loading, error] = useCollectionOnce(
+    collection(getFirestore(app), 'events')
+  );
 
-  return <b>EVENTS PAGE!</b>
+  useEffect(() => {
+    if (value) {
+      const foo = value.docs.map(doc => doc.data() as Event)
+      setEvents(foo)
+    }
+    
+  }, [value])
+    
+  return (
+  <>
+    {loading && <CircularProgress />}
+    <CategoryMenu />
+    {events && <EventList events={events}/>}
+  </>
+  )
 }
 
 export default Events
+
