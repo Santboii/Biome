@@ -5,9 +5,11 @@ import { Container as MuiContainer, styled, ThemeProvider } from '@mui/material'
 import { UserProvider } from './providers/user-provider'
 import theme from './theme'
 
-export const Container = styled(MuiContainer)({
+const Container = styled(MuiContainer)({
   marginTop: 80, // height of the header
   padding: '32px 0',
+  backgroundColor: '#EAEFF2',
+  minHeight: '100vh',
 })
 
 export default function App({ Component, pageProps }: AppProps) {

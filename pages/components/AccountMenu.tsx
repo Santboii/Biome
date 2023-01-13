@@ -3,15 +3,18 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-import Logout from '@mui/icons-material/Logout'
 import { User } from '../../interfaces'
 import Link from 'next/link'
 import { styled } from '@mui/system'
+import { getAuth, signOut } from "firebase/auth";
+import { app } from '../../firebase'
+import { useContext } from 'react'
+import { UserContext } from '../providers/user-provider'
+
 
 interface AccountMenuProps {
   user: User
@@ -26,18 +29,27 @@ const StyledLink = styled(Link)({
 export const AccountMenu: React.FC<AccountMenuProps> = ({user}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const auth = getAuth(app)
+  const { setUser } = useContext(UserContext);
+
+  
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const handleLogout = async () => {
+    await signOut(auth)
+    setUser({} as User)
+  }
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        {user.id && <Typography sx={{ minWidth: 100 }}>{user.displayName}</Typography>}
+        {user.id && <Typography sx={{ color: '#009688', fontWeight: 800, minWidth: 100 }}>{user.displayName}</Typography>}
         <Tooltip title="Account settings">
           <IconButton
+            color='primary'
             onClick={handleClick}
             size="small"
             sx={{ ml: 2 }}
@@ -45,7 +57,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({user}) => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>
+            <Avatar  sx={{ width: 32, height: 32 }}>
               { user.displayName && user.displayName[0]}
             </Avatar>
           </IconButton>
@@ -88,7 +100,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({user}) => {
       >
         {/* TODO: create a isLoggedIn utility function */}
         {
-          user.id ? (
+          user?.id ? (
             <div>
               <MenuItem>
                 <Avatar /> Profile
@@ -106,16 +118,10 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({user}) => {
             </div>
           )
         }
-        <Divider />
           <MenuItem>Help</MenuItem>
           {
             user.id && (
-              <MenuItem>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             )
           }
       </Menu>

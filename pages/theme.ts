@@ -6,17 +6,17 @@ const theme = createTheme({
       light: '#33ab9f',
       main: '#009688',
       dark: '#00695f',
-      contrastText: '#FFF'
+      contrastText: 'red'
     },
     secondary: {
       light: '#4aedc4',
       main: '#1de9b6',
       dark: '#14a37f',
-      contrastText: '#FFF'
-    }
+      contrastText: 'red'
+    },
   },
   typography: {
-    fontFamily: 'Raleway, Arial',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
   },
   components: {
     MuiCard: {

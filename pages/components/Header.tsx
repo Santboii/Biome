@@ -8,10 +8,8 @@ const Wrapper = styled('div')({
   flexGrow: 1
 })
 const TitleLink = styled(Link)({
-  color: '#FFF',
   textDecoration: 'none',
   flexGrow: 1,
-  
 })
 
 
@@ -20,12 +18,14 @@ const Header: React.FC = () => {
 
   return (
     <Wrapper>
-      <AppBar>
+      <AppBar sx={{backgroundColor: '#FFF'}}>
         <Toolbar sx={{minHeight: '80px !important'}}>
           <Box flexGrow={1}>
             <TitleLink href={'/events'}>
-              <Typography sx={{fontSize: 24}}>
-              Biome</Typography>
+              <Typography
+                sx={{fontSize: 24}}
+                fontWeight="800"
+                >Biome</Typography>
             </TitleLink>
           </Box>
           <Box>

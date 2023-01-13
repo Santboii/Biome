@@ -1,12 +1,12 @@
 export enum Category {
-  Academics = 'Academics',
-  ArtsAndCulture = 'Arts & Culture',
-  Gaming = 'Gaming',
-  Music = 'Music',
-  Networking = 'Networking',
-  Outdoors = 'Outdoors',
-  PartiesAndGatherings = 'Parties & Gatherings',
-  Sports = 'Sports'
+  academics = 'Academics',
+  artsAndCulture = 'Arts & Culture',
+  gaming = 'Gaming',
+  music = 'Music',
+  networking = 'Networking',
+  outdoors = 'Outdoors',
+  partiesAndGatherings = 'Parties & Gatherings',
+  sports = 'Sports'
 }
 
 export interface Location {

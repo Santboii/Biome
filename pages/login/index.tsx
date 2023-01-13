@@ -4,10 +4,12 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { TextField, Button, Grid, Typography } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { UserContext } from '../providers/user-provider';
+import { useRouter } from 'next/router';
 
 const provider = new GoogleAuthProvider();
 
 const Login: React.FC = () => {
+  const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const auth = getAuth(app)
@@ -23,6 +25,7 @@ const Login: React.FC = () => {
         displayName: res.user.displayName ?? '',
         email: res.user.email ?? ''
       })
+      router.push('/events')
     } catch (err) {
       console.log(err)
     }
@@ -33,9 +36,7 @@ const Login: React.FC = () => {
     alert('Logging in!')
   }
 
-
   return (
-    
       <Grid container spacing={3}>
         {/* Login Title */}
         <Grid item xs={12}>
