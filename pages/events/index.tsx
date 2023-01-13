@@ -1,12 +1,13 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material"
 import { getFirestore, collection } from "firebase/firestore"
-import { useEffect, useState } from "react";
-import { useCollectionOnce } from 'react-firebase-hooks/firestore';
+import { useEffect, useState } from "react"
+import { useCollectionOnce } from 'react-firebase-hooks/firestore'
 
 import { app } from "../../firebase"
-import { Category, Event } from '../../interfaces'
-import CategoryMenu from "../components/CategoryMenu";
-import EventList from "../components/EventsList";
+import { Event } from '../../interfaces'
+import CategoryMenu from "../components/CategoryMenu"
+import CreateEventDialog from "../components/CreateEventDialog"
+import EventList from "../components/EventsList"
 
 export interface CategoryConfig {
   academics: boolean
@@ -31,14 +32,13 @@ const Events: React.FC = () => {
     partiesAndGatherings: false,
     sports: false,
   } as CategoryConfig)
-  const [value, loading, error] = useCollectionOnce(
+  const [value, loading] = useCollectionOnce(
     collection(getFirestore(app), 'events')
   );
 
   useEffect(() => {
-    if (value) {
-      const foo = value.docs.map(doc => doc.data() as Event)
-      setEvents(foo)
+    if (value?.docs.length) {
+      setEvents(value.docs.map(doc => doc.data() as Event))
     }
     
   }, [value])
@@ -46,8 +46,13 @@ const Events: React.FC = () => {
   return (
   <>
     {loading && <CircularProgress />}
-    <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
-    {events && <EventList events={events}/>}
+    {!!events.length && (
+      <>
+        <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
+        <EventList events={events}/>
+        <CreateEventDialog />
+      </>
+      )}
   </>
   )
 }
