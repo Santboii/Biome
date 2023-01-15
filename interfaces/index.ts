@@ -19,7 +19,7 @@ export interface Event {
   id: string
   title: string
   description?: string
-  categories: Category
+  categories: Category[]
   startTime: Date
   endTime: Date
   location: string
