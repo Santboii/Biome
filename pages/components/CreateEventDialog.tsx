@@ -35,7 +35,7 @@ export const CreateEventDialog = () => {
   };
 
   const onSubmit = (d: unknown) => {
-    console.log(JSON.stringify(d))
+    console.log(d)
   }
 
   return (
@@ -65,8 +65,28 @@ export const CreateEventDialog = () => {
               fullWidth
               margin="normal"
             />
+            <TextField
+              label="Starts at"
+              type="datetime-local"
+              defaultValue={Date.now()}
+              sx={{ width: '50%' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...register("startTime")}
+            />
+            <TextField
+              label="Ends at"
+              type="datetime-local"
+              defaultValue={Date.now()}
+              sx={{ width: '50%' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...register("endTime")}
+            />
             <TextField       
-              {...register('name')}       
+              {...register('description')}       
               label="Description"
               multiline
               rows={4}
