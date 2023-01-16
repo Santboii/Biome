@@ -7,14 +7,8 @@ import { UserContext } from '../providers/user-provider'
 import { useRouter } from 'next/router'
 import { auth } from '../../firebase'
 import { useForm } from 'react-hook-form'
-
-const provider = new GoogleAuthProvider()
-
-export const SocialLoginButton = styled(Button)({
-  padding: '12px',
-  width: '100%',
-  textTransform: 'capitalize'
-})
+import { SocialLoginButton } from '../login'
+import Link from 'next/link'
 
 
 const Login: React.FC = () => {
@@ -57,16 +51,25 @@ const Login: React.FC = () => {
           <Typography
             textAlign='center'
             fontWeight={800}
-            variant='h4'
+            variant='h5'
             marginY={4}
           >Welcome to Biome!</Typography>
+          <Typography
+            textAlign='left'
+            variant='body1'
+            marginY={4}
+          >
+            Discover and join exciting local events created by users in your community with
+            Biome. Easily create your own events and connect with others to
+            make plans and have fun!
+          </Typography>
           <Box mb={5}>
             {/* Google login */}
             <SocialLoginButton
               startIcon={<Google />}
               onClick={handleGoogleSubmit}
               sx={{color: '#FFF', backgroundColor: '#4285F4'}}
-            >Sign in with Google!</SocialLoginButton>
+            >Sign up with Google!</SocialLoginButton>
           </Box>
           <Divider sx={{margin: 3, fontWeight: 600}}>OR</Divider>
           <Box>
@@ -99,25 +102,12 @@ const Login: React.FC = () => {
                 color="primary"
                 sx={{padding: 1.5}}
               >
-                Log In
+                Sign Up
               </Button>
             </form>
-          </Box>
-          <Divider sx={{margin: 5}} />
-          <Box justifyContent='center'>
-            <Typography
-              sx={{display: 'block', fontWeight: 800, textAlign: 'center'}}
-            >Don&apos;t have an account?</Typography>
-            <Button
-              fullWidth
-              type="submit"
-              variant="outlined"
-              color="primary"
-              href='signup'
-              sx={{padding: 1.5, marginTop: 2}}
-            >
-              Sign Up for Biome!
-            </Button>
+            <Typography sx={{marginTop: 2}}>
+              Have an account? <Link href="/login">Log in.</Link>
+            </Typography>
           </Box>
         </Grid>
      </Grid>

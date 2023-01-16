@@ -20,6 +20,14 @@ const theme = createTheme({
     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          textTransform: 'capitalize',
+        },
+      },
+    },
     MuiCard: {
      styleOverrides: {
       root: {

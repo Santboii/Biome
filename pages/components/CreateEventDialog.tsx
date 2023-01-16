@@ -14,14 +14,6 @@ import { Category } from '../../interfaces'
 import { db } from '../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 
-
-interface CreateEventForm {
-  title: string
-  description: string
-  location: string
-  categories: Category[]
-}
-
 export const CreateEventDialog = () => {
   const { register, handleSubmit } = useForm()
   

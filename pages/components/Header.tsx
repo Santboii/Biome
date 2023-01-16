@@ -26,6 +26,7 @@ const Header: React.FC = () => {
               <Typography
                 sx={{fontSize: 24}}
                 fontWeight="800"
+                color="primary"
                 >Biome</Typography>
             </TitleLink>
           </Box>
