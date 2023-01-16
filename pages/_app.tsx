@@ -6,8 +6,7 @@ import { UserProvider } from './providers/user-provider'
 import theme from './theme'
 
 const Container = styled(MuiContainer)({
-  marginTop: 80, // height of the header
-  padding: '32px 0',
+  padding: '112px 0 32px 0',  // includes height of the header
   backgroundColor: '#EAEFF2',
   minHeight: '100vh',
 })

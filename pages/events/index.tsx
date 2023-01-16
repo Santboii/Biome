@@ -1,9 +1,9 @@
 import { CircularProgress } from "@mui/material"
-import { getFirestore, collection } from "firebase/firestore"
+import { collection } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useCollectionOnce } from 'react-firebase-hooks/firestore'
 
-import { app } from "../../firebase"
+import { db } from "../../firebase"
 import { Event } from '../../interfaces'
 import CategoryMenu from "../components/CategoryMenu"
 import CreateEventDialog from "../components/CreateEventDialog"
@@ -33,7 +33,7 @@ const Events: React.FC = () => {
     sports: false,
   } as CategoryConfig)
   const [value, loading] = useCollectionOnce(
-    collection(getFirestore(app), 'events')
+    collection(db, 'events')
   );
 
   useEffect(() => {

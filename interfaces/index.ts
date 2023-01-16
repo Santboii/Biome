@@ -18,7 +18,7 @@ export interface Location {
 export interface Event {
   id: string
   title: string
-  description?: string
+  description: string
   categories: Category[]
   startTime: Date
   endTime: Date

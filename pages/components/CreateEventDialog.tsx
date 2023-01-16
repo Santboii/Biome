@@ -6,11 +6,13 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Fab } from '@mui/material'
+import { Box, Fab } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import CategoryMultiSelect from './CategoryMultiSelect'
 import { useForm } from 'react-hook-form'
 import { Category } from '../../interfaces'
+import { db } from '../../firebase'
+import { addDoc, collection } from 'firebase/firestore'
 
 
 interface CreateEventForm {
@@ -34,8 +36,13 @@ export const CreateEventDialog = () => {
     setOpen(false);
   };
 
-  const onSubmit = (d: unknown) => {
-    console.log(d)
+  const onSubmit = async (eventForm: unknown) => {
+    try { 
+      await addDoc((collection(db, 'events')), eventForm)
+      setOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -52,55 +59,58 @@ export const CreateEventDialog = () => {
         <Add />
       </Fab>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create Event</DialogTitle>
+        <DialogTitle sx={{fontWeight: 800}}>Create local Biome event!</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogContentText>
-              Fill out the event details below to create your new Biome event!
+            <DialogContentText sx={{marginBottom: 2}}>
+              Fill out the event details below to create a local event. Once created, other nearby users will be able to view and join it!
             </DialogContentText>
             <TextField
               {...register("title")}
               label="Title"
               variant="outlined"
               fullWidth
-              margin="normal"
+              sx={{marginBottom: 2}}
             />
+            <Box marginBottom={2} sx={{display: 'flex', gap: 1}}>
+              <TextField
+                label="Starts at"
+                type="datetime-local"
+                defaultValue={Date.now()}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{width: '50%'}}
+                {...register("startTime")}
+              />
+              <TextField
+                label="Ends at"
+                type="datetime-local"
+                defaultValue={Date.now()}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{width: '50%'}}
+                {...register("endTime")}
+              />
+            </Box>
             <TextField
-              label="Starts at"
-              type="datetime-local"
-              defaultValue={Date.now()}
-              sx={{ width: '50%' }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              {...register("startTime")}
-            />
-            <TextField
-              label="Ends at"
-              type="datetime-local"
-              defaultValue={Date.now()}
-              sx={{ width: '50%' }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              {...register("endTime")}
-            />
-            <TextField       
-              {...register('description')}       
               label="Description"
               multiline
               rows={4}
               fullWidth
+              {...register('description')}       
             />
             <TextField
-              {...register('location')}
               label="City"
               variant="outlined"
               fullWidth
               margin="normal"
+              sx={{marginBottom: 2}}
+              {...register('location')}
             />
             <CategoryMultiSelect register={register} />
-            <DialogActions>
+            <DialogActions sx={{marginTop: 3}}>
               <Button onClick={handleClose}>Cancel</Button>
               <Button variant='contained' color="primary" type="submit">Create</Button>
             </DialogActions>
