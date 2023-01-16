@@ -1,6 +1,6 @@
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Chip } from "@mui/material"
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions } from "@mui/material"
 import { Event } from "../../interfaces"
-import { camelToReadable } from "../../utils"
+import { categoryIconMapper } from "../../utils"
 
 interface EventCardProps {
   event: Event
@@ -30,9 +30,9 @@ const EventCard: React.FC<EventCardProps> = ({event}) => {
       </CardActionArea>
       <CardActions>
         { !!event.categories.length &&
-        event.categories.map((value) => (
-          <Chip key={value} label={camelToReadable(value)} />
-        ))}
+        event.categories.map(
+          (category) => categoryIconMapper(category)
+        )}
       </CardActions>
     </Card>    
   )

@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { AppBar, Toolbar, Box, Typography, Link } from '@mui/material';
+import React, { useContext } from 'react';
+import { AppBar, Toolbar, Box, Typography } from '@mui/material';
 import { AccountMenu } from './AccountMenu';
 import { styled } from '@mui/system';
 import { UserContext } from '../providers/user-provider';
+import Link from 'next/link';
 
 const Wrapper = styled('div')({
   flexGrow: 1

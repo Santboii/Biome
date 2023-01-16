@@ -102,7 +102,7 @@ export const CreateEventDialog = () => {
               {...register('description')}       
             />
             <TextField
-              label="City"
+              label="Location"
               variant="outlined"
               fullWidth
               margin="normal"

@@ -10,8 +10,8 @@ import Tooltip from '@mui/material/Tooltip'
 import { User } from '../../interfaces'
 import Link from 'next/link'
 import { styled } from '@mui/system'
-import { getAuth, signOut } from "firebase/auth";
-import { app } from '../../firebase'
+import { signOut } from "firebase/auth";
+import { auth } from '../../firebase'
 import { useContext } from 'react'
 import { UserContext } from '../providers/user-provider'
 
@@ -29,7 +29,6 @@ const StyledLink = styled(Link)({
 export const AccountMenu: React.FC<AccountMenuProps> = ({user}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const auth = getAuth(app)
   const { setUser } = useContext(UserContext);
 
   

@@ -40,20 +40,20 @@ const Events: React.FC = () => {
     if (value?.docs.length) {
       setEvents(value.docs.map(doc => doc.data() as Event))
     }
-    
+
   }, [value])
-    
+
   return (
-  <>
-    {loading && <CircularProgress />}
-    {!!events.length && (
-      <>
-        <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
-        <EventList events={events}/>
-        <CreateEventDialog />
-      </>
+    <>
+      {loading && <CircularProgress />}
+      {!!events.length && (
+        <>
+          <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
+          <EventList events={events} />
+          <CreateEventDialog />
+        </>
       )}
-  </>
+    </>
   )
 }
 
