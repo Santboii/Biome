@@ -15,9 +15,16 @@ const EventCard: React.FC<EventCardProps> = ({event}) => {
           <Image width={200} height={80} src="/assets/images/gaming-2.jpg" alt={event.title} />
         </CardMedia>
         <CardContent>
-          <Typography fontWeight={800} gutterBottom variant="h6">
+          {/* Event Card Title */}
+          <Typography
+            sx={{height:40, overflow: "hidden", textOverflow: "ellipsis"}}
+            fontWeight={800}
+            gutterBottom
+            variant="body1"
+            >
             {event.title}
           </Typography>
+          {/* Event Card Description */}
           <Typography
             sx={{height:40, overflow: "hidden", textOverflow: "ellipsis"}}
             variant="body2"
@@ -27,7 +34,8 @@ const EventCard: React.FC<EventCardProps> = ({event}) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions sx={{paddingLeft: 2, paddingBottom: 2}}>
+        {/* Event Card Category Icons */}
         { !!event.categories.length &&
         event.categories.map(
           (category) => categoryIconMapper(category)

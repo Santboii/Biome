@@ -1,4 +1,4 @@
-import { FormEventHandler, useState } from 'react'
+import { useContext, useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -6,22 +6,26 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Box, Fab, ImageList, ImageListItem } from '@mui/material'
+import { Box, Fab } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import CategoryMultiSelect from './CategoryMultiSelect'
 import { useForm } from 'react-hook-form'
 import { db } from '../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 import { mapCategoryToImage } from '../../utils'
+import { UserContext } from '../providers/user-provider';
+import { useRouter } from 'next/router'
+
 
 export const CreateEventDialog = () => {
+  const { user } = useContext(UserContext);
   const { register, handleSubmit } = useForm()
-  
+  const router = useRouter()
   const [open, setOpen] = useState(false)
 
 
   const handleClickOpen = () => {
-    setOpen(true);
+    user.id ? setOpen(true) : router.push('/login')
   };
 
   const handleClose = () => {
@@ -46,16 +50,16 @@ export const CreateEventDialog = () => {
           bottom: 50,
           right: 50
         }}
-      color="primary"
-       onClick={handleClickOpen}
+        color="primary"
+        onClick={handleClickOpen}
       >
         <Add />
       </Fab>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{fontWeight: 800}}>Create local Biome event!</DialogTitle>
+        <DialogTitle sx={{ fontWeight: 800 }}>Create local Biome event!</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogContentText sx={{marginBottom: 2}}>
+            <DialogContentText sx={{ marginBottom: 2 }}>
               Fill out the event details below to create a local event. Once created, other nearby users will be able to view and join it!
             </DialogContentText>
             {/* event title */}
@@ -64,7 +68,7 @@ export const CreateEventDialog = () => {
               label="Title"
               variant="outlined"
               fullWidth
-              sx={{marginBottom: 2}}
+              sx={{ marginBottom: 2 }}
             />
             {/* event starts_at, ends_at */}
             <Box marginBottom={2} sx={{display: 'flex', gap: 1}}>
@@ -75,7 +79,7 @@ export const CreateEventDialog = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{width: '50%'}}
+                sx={{ width: '50%' }}
                 {...register("startTime")}
               />
               <TextField
@@ -85,7 +89,7 @@ export const CreateEventDialog = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{width: '50%'}}
+                sx={{ width: '50%' }}
                 {...register("endTime")}
               />
             </Box>
@@ -95,7 +99,7 @@ export const CreateEventDialog = () => {
               multiline
               rows={4}
               fullWidth
-              {...register('description')}       
+              {...register('description')}
             />
             {/* event location */}
             <TextField
@@ -103,12 +107,12 @@ export const CreateEventDialog = () => {
               variant="outlined"
               fullWidth
               margin="normal"
-              sx={{marginBottom: 2}}
+              sx={{ marginBottom: 2 }}
               {...register('location')}
             />
             {/* event category select */}
             <CategoryMultiSelect register={register} />
-            <DialogActions sx={{marginTop: 3}}>
+            <DialogActions sx={{ marginTop: 3 }}>
               <Button onClick={handleClose}>Cancel</Button>
               <Button variant='contained' color="primary" type="submit">Create</Button>
             </DialogActions>
