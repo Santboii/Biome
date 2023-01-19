@@ -6,13 +6,13 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Box, Fab } from '@mui/material'
+import { Box, Fab, ImageList, ImageListItem } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import CategoryMultiSelect from './CategoryMultiSelect'
 import { useForm } from 'react-hook-form'
-import { Category } from '../../interfaces'
 import { db } from '../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
+import { mapCategoryToImage } from '../../utils'
 
 export const CreateEventDialog = () => {
   const { register, handleSubmit } = useForm()
@@ -28,8 +28,9 @@ export const CreateEventDialog = () => {
     setOpen(false);
   };
 
-  const onSubmit = async (eventForm: unknown) => {
+  const onSubmit = async (eventForm: any) => {
     try { 
+      eventForm.background_image = mapCategoryToImage(eventForm.categories[0])
       await addDoc((collection(db, 'events')), eventForm)
       setOpen(false)
     } catch (error) {
@@ -57,6 +58,7 @@ export const CreateEventDialog = () => {
             <DialogContentText sx={{marginBottom: 2}}>
               Fill out the event details below to create a local event. Once created, other nearby users will be able to view and join it!
             </DialogContentText>
+            {/* event title */}
             <TextField
               {...register("title")}
               label="Title"
@@ -64,6 +66,7 @@ export const CreateEventDialog = () => {
               fullWidth
               sx={{marginBottom: 2}}
             />
+            {/* event starts_at, ends_at */}
             <Box marginBottom={2} sx={{display: 'flex', gap: 1}}>
               <TextField
                 label="Starts at"
@@ -86,6 +89,7 @@ export const CreateEventDialog = () => {
                 {...register("endTime")}
               />
             </Box>
+            {/* event description */}
             <TextField
               label="Description"
               multiline
@@ -93,6 +97,7 @@ export const CreateEventDialog = () => {
               fullWidth
               {...register('description')}       
             />
+            {/* event location */}
             <TextField
               label="Location"
               variant="outlined"
@@ -101,6 +106,7 @@ export const CreateEventDialog = () => {
               sx={{marginBottom: 2}}
               {...register('location')}
             />
+            {/* event category select */}
             <CategoryMultiSelect register={register} />
             <DialogActions sx={{marginTop: 3}}>
               <Button onClick={handleClose}>Cancel</Button>

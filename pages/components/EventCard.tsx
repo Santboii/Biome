@@ -1,4 +1,5 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions } from "@mui/material"
+import Image from "next/image"
 import { Event } from "../../interfaces"
 import { categoryIconMapper } from "../../utils"
 
@@ -10,11 +11,9 @@ const EventCard: React.FC<EventCardProps> = ({event}) => {
   return (
     <Card key={event.id}>
       <CardActionArea>
-        <CardMedia
-          sx={{ height: 140 }}
-          image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"
-          title={event.title}
-        />
+        <CardMedia sx={{maxHeight: 50}}>
+          <Image width={200} height={80} src="/assets/images/gaming-2.jpg" alt={event.title} />
+        </CardMedia>
         <CardContent>
           <Typography fontWeight={800} gutterBottom variant="h6">
             {event.title}

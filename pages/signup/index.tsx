@@ -1,7 +1,6 @@
 import React, { FormEvent, useContext, useState } from 'react'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { TextField, Button, Grid, Paper, Box, Divider, Typography } from '@mui/material'
-import styled from "@mui/styled-engine"
 import { Google } from '@mui/icons-material'
 import { UserContext } from '../providers/user-provider'
 import { useRouter } from 'next/router'
@@ -22,12 +21,12 @@ const Login: React.FC = () => {
   // https://firebase.google.com/docs/auth/web/google-signin
   const handleGoogleSubmit = async () => {
     try {
-      const res = await signInWithPopup(auth, provider)
-      setUser({
-        id: res.user.uid,
-        displayName: res.user.displayName ?? '',
-        email: res.user.email ?? ''
-      })
+      // const res = await signInWithPopup(auth, provider)
+      // setUser({
+      //   id: res.user.uid,
+      //   displayName: res.user.displayName ?? '',
+      //   email: res.user.email ?? ''
+      // })
       router.push('/events')
     } catch (err) {
       console.log(err)

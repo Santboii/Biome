@@ -23,6 +23,7 @@ export interface Event {
   startTime: Date
   endTime: Date
   location: string
+  background_image: string
 }
 
 export interface User {

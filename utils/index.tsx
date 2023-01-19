@@ -38,3 +38,36 @@ export const categoryIconMapper = (category: Category) => {
         return <SportsBasketballOutlined sx={{color: '#009688', fontSize: 24}} />
   }
 }
+
+export const mapCategoryToImage = (category: string): string => {
+    let image: string;
+    switch(category) {
+        case "academics":
+            image = `academics-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "artsAndCulture":
+            image = `artsAndCulture-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "gaming":
+            image = `gaming-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "music":
+            image = `music-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "networking":
+            image = `networking-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "outdoors":
+            image = `outdoors-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "partiesAndGatherings":
+            image = `partiesAndGatherings-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        case "sports":
+            image = `sports-${Math.floor(Math.random() * 3) + 1}`;
+            break;
+        default:
+            throw new Error(`Invalid category: ${category}`);
+    }
+    return image;
+}
