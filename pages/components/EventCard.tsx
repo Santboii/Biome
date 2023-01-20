@@ -12,7 +12,6 @@ const EventCard: React.FC<EventCardProps> = ({event}) => {
     <Card key={event.id}>
       <CardActionArea>
         <CardMedia sx={{maxHeight: 50}}>
-          <Image width={200} height={80} src="/assets/images/gaming-2.jpg" alt={event.title} />
         </CardMedia>
         <CardContent>
           {/* Event Card Title */}

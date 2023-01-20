@@ -43,13 +43,18 @@ const Events: React.FC = () => {
 
   }, [value])
 
+  const activeCategories = Object.keys(categoryConfig).filter((key) => categoryConfig[key as keyof CategoryConfig])
+  const filteredEvents = activeCategories.length 
+    ? events.filter((event) => event.categories.some((category) => activeCategories.includes(category)))
+    : events
+  // const filteredEvents = () => events.filter(event => event.categories.includes())
   return (
     <>
       {loading && <CircularProgress />}
       {!!events.length && (
         <>
           <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
-          <EventList events={events} />
+          <EventList events={filteredEvents} />
           <CreateEventDialog />
         </>
       )}
