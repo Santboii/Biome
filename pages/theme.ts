@@ -15,6 +15,12 @@ const theme = createTheme({
       dark: '#14a37f',
       contrastText: '#FFF'
     },
+    common: {
+      black: '#1A2027'
+    },
+    info: {
+      main: '#1A2027'
+    }
   },
   typography: {
     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',

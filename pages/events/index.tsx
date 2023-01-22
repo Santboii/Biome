@@ -1,7 +1,5 @@
-import { CircularProgress } from "@mui/material"
-import { collection } from "firebase/firestore"
-import { useEffect, useState } from "react"
-import { useCollectionOnce } from 'react-firebase-hooks/firestore'
+import { collection, getDocs } from "firebase/firestore"
+import { useState } from "react"
 
 import { db } from "../../firebase"
 import { Event } from '../../interfaces'
@@ -20,8 +18,36 @@ export interface CategoryConfig {
   sports: boolean
 }
 
-const Events: React.FC = () => {
-  const [events, setEvents] = useState([] as Event[])
+interface EventsProps { 
+  events: Event[]
+}
+
+// NEXTJS server fetch
+export async function getServerSideProps() {
+  let events: Event[] = []
+  try {
+    const eventsSnapshot = await getDocs(collection(db, 'events'))
+    eventsSnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      const event = {
+        id: doc.id,
+        ...doc.data()
+      } as Event
+
+      events.push(event)
+    })
+    console.log(events)
+
+    return { props: { events } }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+const Events: React.FC<EventsProps> = ({ events }) => {
+  console.log(events)
+  
   const [categoryConfig, setCategoryConfig] = useState<CategoryConfig>({
     academics: false,
     artsAndCulture: false,
@@ -32,32 +58,18 @@ const Events: React.FC = () => {
     partiesAndGatherings: false,
     sports: false,
   } as CategoryConfig)
-  const [value, loading] = useCollectionOnce(
-    collection(db, 'events')
-  );
 
-  useEffect(() => {
-    if (value?.docs.length) {
-      setEvents(value.docs.map(doc => doc.data() as Event))
-    }
-
-  }, [value])
 
   const activeCategories = Object.keys(categoryConfig).filter((key) => categoryConfig[key as keyof CategoryConfig])
   const filteredEvents = activeCategories.length 
     ? events.filter((event) => event.categories.some((category) => activeCategories.includes(category)))
     : events
-  // const filteredEvents = () => events.filter(event => event.categories.includes())
+
   return (
     <>
-      {loading && <CircularProgress />}
-      {!!events.length && (
-        <>
-          <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
-          <EventList events={filteredEvents} />
-          <CreateEventDialog />
-        </>
-      )}
+      <CategoryMenu categoryConfig={categoryConfig} setCategoryConfig={setCategoryConfig} />
+      <EventList events={filteredEvents} />
+      <CreateEventDialog />
     </>
   )
 }
